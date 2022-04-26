@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState , useEffect } from 'react'
 import Link from 'next/link'
+
 
 const posts = [
   {
@@ -21,7 +22,7 @@ const posts = [
 ]
 
 
-const PostWidget = () => {
+const PostWidget = ({ categories, slug }) => {
   return (
     <div className='bg-white shadow-lg rounded-lg p-8 mb-8'>
       <p className='text-xl mb-8 font-semibold border-b pb-4'>Related posts</p>
