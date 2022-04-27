@@ -1,5 +1,7 @@
 import React, { useState , useEffect } from 'react'
 import Link from 'next/link'
+import moment from 'moment'
+import { GET_RECENT_POSTS , GET_SIMILER_POSTS } from '../graphgql'
 
 
 const posts = [
@@ -23,10 +25,25 @@ const posts = [
 
 
 const PostWidget = ({ categories, slug }) => {
+  const [relatedPost, setRelatedPost] = useState([])
+  useEffect(() => {
+    if(slug) {
+      GET_SIMILER_POSTS(categories , slug)
+      .then((result) => setRelatedPost(result))
+    } else {
+      GET_RECENT_POSTS()
+      .then((result) => setRelatedPost(result))
+    }
+
+  }, [slug])
+  
+  console.log(relatedPost);
   return (
     <div className='bg-white shadow-lg rounded-lg p-8 mb-8'>
-      <p className='text-xl mb-8 font-semibold border-b pb-4'>Related posts</p>
-      {posts.map((post, index) => (
+      <p className='text-xl mb-8 font-semibold border-b pb-4'>
+       {slug ? ' Related Posts' : 'Recent Post'}
+        </p>
+      {relatedPost.map((post, index) => (
         <div key={index} className="flex items-center w-full mb-4">
           <div className='w-16 flex-none'>
             <img
@@ -34,17 +51,17 @@ const PostWidget = ({ categories, slug }) => {
               height="60px"
               width="60px"
               className='align-middle rounded-full'
-              src={post.img}
+              src={post.featuredimage.url}
             />
           </div>
           <div className='flex-grow ml-4'>
             <p className='text-gray-500 text-xs'>
-              {post.date}
+              {moment(post.createdAt).format('MMM DD, YYYY')}
             </p >
-            <Link key={index} href={`/post/${post.slug}`}> 
+            <Link  href={`/post/${post.slug}`}> 
             {post.title}
             </Link>
-          </div>
+          </div> 
         </div>
       ))}
     </div>
