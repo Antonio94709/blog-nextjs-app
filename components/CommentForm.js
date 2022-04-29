@@ -61,12 +61,12 @@ useEffect(() => {
           name='Name'
           ref={nameEl}
         />
-        <input
-          ref={emailEl}
+        <input      
           type="email"
           className='p-2 px-4 outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700'
           placeholder='Email'
           name='Email'
+          ref={emailEl}
         />
       </div>
       <div className='grid grid-cols-1 gap-4 mb-4'>
@@ -80,7 +80,7 @@ useEffect(() => {
           className='transition duration-500 ease hover:bg-indigo-900 inline-block bg-pink-600 text-lg rounded-full text-white px-8 py-2'>
           Post Comment
         </button>
-        {showSuccessMessage && <span className='text-xl float-right font-semibold mt-3 text-green-500'>Comment submitted for review</span>}
+        {showSuccessMessage && <span className='text-sm sm:text-xl float-right font-semibold mt-3 text-green-500'>Comment submitted for review</span>}
       </div>
     </div>
   )
